@@ -42,7 +42,7 @@ const propagateNewVersion = (name, version, folders = []) => {
         // if the package is the target package we are going to upgrade
         if (name === packageName && version !== packageVersion) {
             // update the package.json file
-            packageJson.version = packageVersion;
+            packageJson.version = version;
 
             // save to disk
             console.log(`Saving ${name}, ${packageVersion} => ${version}`);
@@ -62,7 +62,7 @@ const propagateNewVersion = (name, version, folders = []) => {
             newList.push(packageName);
 
             // save to disk
-            console.log(`Update dependency ${name} from ${packageName}, ${packageVersion} => ${version}`);
+            console.log(`Update dependency ${name} from ${packageName}, ${existingVersion} => ${version}`);
             writeFileSync(`${dir}/package.json`, JSON.stringify(packageJson, null, '  '));
         }
     });
