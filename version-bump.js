@@ -40,7 +40,7 @@ const propagateNewVersion = (name, version, folders = []) => {
         const packageJson = getPackageJson(dir);
         const { dependencies = {}, name: packageName, version: packageVersion } = packageJson;
         // if the package is the target package we are going to upgrade
-        if (name === packageName && version !== packageVersion) {
+        if (name === packageName && version !== packageVersion && !doneMap[packageName]) {
             // update the package.json file
             packageJson.version = version;
 
@@ -51,15 +51,16 @@ const propagateNewVersion = (name, version, folders = []) => {
 
         // if the package is in dependencies, then udpate that
         const existingVersion = dependencies[name];
-        if (existingVersion && existingVersion !== version && !doneMap[packageName]) {
+        if (existingVersion && existingVersion !== version) {
             // update the depency value
             packageJson.dependencies[name] = version;
 
-            // add to the updateMap so that it can be queued
-            updateMap[packageName] = packageVersion;
-
-            // ask to bump up version
-            newList.push(packageName);
+            // add to the updateMap if not already processed so that it can be queued
+            if (!doneMap[packageName]) {
+                updateMap[packageName] = packageVersion;
+                // ask to bump up version
+                newList.push(packageName);
+            }
 
             // save to disk
             console.log(`Update dependency ${name} from ${packageName}, ${existingVersion} => ${version}`);
