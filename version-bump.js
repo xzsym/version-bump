@@ -22,6 +22,7 @@ const rl = readline.createInterface({
     output: process.stdout
 });
 
+// read the package.json under the give directory
 const getPackageJson = (dir) => {
     const file = `${dir}/package.json`;
     if (existsSync(file)) {
@@ -34,6 +35,7 @@ const getPackageJson = (dir) => {
 
 const getFolders = p => readdirSync(PACKAGE_FOLDER).filter(f => statSync(path.join(p, f)).isDirectory());
 
+// update the package.json to change the version value
 const propagateNewVersion = (name, version, folders = []) => {
     const newList = [];
     folders.forEach((dir) => {
@@ -76,6 +78,7 @@ const propagateNewVersion = (name, version, folders = []) => {
     return newList;
 };
 
+// read user input asynchronizely
 const readFromConsole = (packageName, lastVersion) => {
     return new Promise((resolve) => {
         rl.question(`Input new version for ${packageName}: [${lastVersion}] `, (answer) => {
@@ -88,6 +91,7 @@ const readFromConsole = (packageName, lastVersion) => {
     });
 }
 
+// bump up the versions for all the dependencies
 async function bumpUpVersion(packageList = []) {
     let newList = [];
 

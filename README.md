@@ -2,6 +2,8 @@
 Bump the package.json and its dependencies
 
 ## Usage
+Make sure the node version is > 7.6.
+
 ```
 node version-bump.js ../SFE-Packages/packages/has-pipeline ../SFE-Packages/packages
 ```
