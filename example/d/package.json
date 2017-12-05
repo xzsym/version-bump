@@ -1,7 +1,7 @@
 {
   "name": "d",
-  "version": "0.1",
+  "version": "0.2",
   "dependencies": {
-    "e": "0.2"
+    "e": "0.3"
   }
 }
